@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using School_API.Data;
+using School_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//task1
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddScoped<LectorService>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllers();
