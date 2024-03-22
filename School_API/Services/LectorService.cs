@@ -35,7 +35,7 @@ namespace School_API.Services
         {
             try
             {
-                var lector= await _db.Lectors.FirstOrDefaultAsync(lector=>lector.Id==Id);
+                var lector = await _db.Lectors.FirstOrDefaultAsync(lector => lector.Id == Id);
                 return lector;
             }
             catch (Exception)
@@ -60,12 +60,13 @@ namespace School_API.Services
             }
         }
 
+
         public async Task<bool> UpdateLector(int Id, LectorCreateDto model)
         {
-                var lector = await GetById(Id);
+            var lector = await GetById(Id);
             try
             {
-                if(lector == null)
+                if (lector == null)
                 {
                     throw new Exception("Lector with such id does not exist");
                 }
@@ -77,20 +78,21 @@ namespace School_API.Services
             {
                 return false;
             }
-            
+
         }
+
 
         public async Task<bool> DeleteLector(int Id)
         {
             try
             {
-                var lector=await _db.Lectors.FirstAsync(lector=>lector.Id== Id);
-                if(lector != null)
+                var lector = await _db.Lectors.FirstAsync(lector => lector.Id == Id);
+                if (lector != null)
                 {
                     _db.Lectors.Remove(lector);
                     await _db.SaveChangesAsync();
                 }
-               
+
                 return true;
             }
             catch (Exception)
@@ -98,8 +100,6 @@ namespace School_API.Services
                 return false;
             }
         }
-
-        
 
     }
 }

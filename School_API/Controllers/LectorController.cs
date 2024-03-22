@@ -16,23 +16,33 @@ namespace School_API.Controllers
         {
             _lectorService = lectorService;
         }
+
+
         [HttpGet]
         public async Task<ICollection<Lector>?> GetAll()
         {
             return await _lectorService.GetAll();
         }
 
-        [HttpGet]
-        public async Task<Lector?> GetById(int Id)
+        [HttpGet("{id}")]
+        public async Task<Lector?> GetById(int id)
         {
-            return await _lectorService.GetById(Id);
+            return await _lectorService.GetById(id);
         }
+
 
         [HttpPost]
         public async Task<bool> CreateLector(LectorCreateDto model)
         {
             return await _lectorService.CreateLector(model);
         }
+
+        [HttpPut]
+        public async Task<bool> UpdateLector(int id, LectorCreateDto model)
+        {
+            return await _lectorService.UpdateLector(id,model);
+        }
+
 
         [HttpDelete]
         public async Task<bool> DeleteLector(int Id)
