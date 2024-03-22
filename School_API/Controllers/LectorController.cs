@@ -22,6 +22,12 @@ namespace School_API.Controllers
             return await _lectorService.GetAll();
         }
 
+        [HttpGet]
+        public async Task<Lector?> GetById(int Id)
+        {
+            return await _lectorService.GetById(Id);
+        }
+
         [HttpPost]
         public async Task<bool> CreateLector(LectorCreateDto model)
         {
