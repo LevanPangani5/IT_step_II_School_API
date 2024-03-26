@@ -9,6 +9,7 @@ namespace School_API
         public MappingProfile()
         {
             CreateMap<Lector, LectorCreateDto>().ReverseMap();
+            CreateMap<Student, StudentCreateDto>().ReverseMap();
         }
     }
 }
