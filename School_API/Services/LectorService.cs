@@ -101,5 +101,104 @@ namespace School_API.Services
             }
         }
 
+        public async Task<float?> GetMaxGrade(int lectorId)
+        {
+            try
+            {
+                var lector= await _db.Lectors.Include(l=>l.Students).FirstOrDefaultAsync(l => l.Id == lectorId);
+
+                if (lector == null)
+                    return null;
+
+                float? max = lector.Students.Max(s=>s.Grade);
+                return max;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<float?> GetMinGrade(int lectorId)
+        {
+            try
+            {
+                var lector = await _db.Lectors.Include(l => l.Students).FirstOrDefaultAsync(l => l.Id == lectorId);
+
+                if (lector == null)
+                    return null;
+
+                float? max = lector.Students.Min(s => s.Grade);
+                return max;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<float?> GetAvgGrade(int lectorId)
+        {
+            try
+            {
+                var lector = await _db.Lectors.Include(l => l.Students).FirstOrDefaultAsync(l => l.Id == lectorId);
+
+                if (lector == null)
+                    return null;
+
+                float? max = lector.Students.Average(s => s.Grade);
+                return max;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Dictionary<string, int>?> GroupAndCountStudentsByNameForLector(int lectorId)
+        {
+            try
+            {
+                var StudentsGroupedByName = await _db.Lectors
+                    .Where(l => l.Id == lectorId)
+                    .SelectMany(l => l.Students)
+                    .GroupBy(s => s.Name)
+                    .Select(g => new { Name = g.Key, Count = g.Count() })
+                    .ToDictionaryAsync(x => x.Name, x => x.Count);
+                return StudentsGroupedByName;
+            }catch(Exception){
+                return null;
+            }
+        }
+
+        public async Task<List<(string LectorName, string StudentName)>?> GetLectorStudentNames(int lectorId)
+        {
+            try
+            {
+                var lectroStudnetNames = await (
+                    from l in _db.Lectors
+                    join s in _db.Students on l.Id equals s.Lector.Id
+                    where l.Id == lectorId
+                    select new { LectorName = l.Name, StudentName = s.Name })
+                    .ToListAsync();
+
+                return lectroStudnetNames.Select(l => (l.LectorName, l.StudentName)).ToList();
+
+                /*
+                   var lectroStudnetNames = await _db.Lectors
+                     .Join(_db.Students, lector => lector.Id, student => student.Lector.Id,
+                     (Lector, student) => new{
+                         LectorName = Lector.Name,
+                         getLectorStudentNames = student.Name,
+                     }
+                     ).ToListAsync();
+                */
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
     }
 }

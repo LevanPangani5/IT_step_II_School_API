@@ -49,5 +49,35 @@ namespace School_API.Controllers
         {
             return await _lectorService.DeleteLector(Id);
         }
+
+
+        [HttpGet]
+        public async Task<float?> GetMaxGrade(int lectorId)
+        {
+            return await _lectorService.GetMaxGrade(lectorId);
+        }
+
+        [HttpGet]
+        public async Task<float?> GetMinGrade(int lectorId)
+        {
+            return await _lectorService.GetMinGrade(lectorId);
+        }
+
+        [HttpGet]
+        public async Task<float?> GetAvgGrade(int lectorId)
+        {
+            return await _lectorService.GetAvgGrade(lectorId);
+        }
+
+        [HttpGet]
+        public async Task<Dictionary<string, int>?> GroupAndCountStudentsByNameForLector(int lectorId)
+        {
+            return await _lectorService.GroupAndCountStudentsByNameForLector(lectorId);
+        }
+        [HttpGet]
+        public async Task<List<(string LectorName, string StudentName)>?> GetLectorStudentNames(int lectorId)
+        {
+            return await _lectorService.GetLectorStudentNames(lectorId);
+        }
     }
 }
