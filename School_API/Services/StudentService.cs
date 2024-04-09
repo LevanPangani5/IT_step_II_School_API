@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace School_API.Services
 {
-    public class StudentService
+    public class StudentService: IStudentService
     {
         readonly private ApplicationDbContext _db;
         readonly private IMapper _mapper;
@@ -76,7 +76,7 @@ namespace School_API.Services
             }
         }
 
-        public async Task<bool> DeleteStudnent(int id)
+        public async Task<bool> DeleteStudent(int id)
         {
             try
             {

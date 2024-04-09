@@ -46,7 +46,7 @@ namespace School_API.Controllers
         [HttpDelete]
         public async Task<bool> DeleteStudnent(int Id)
         {
-            return await _studentService.DeleteStudnent(Id);
+            return await _studentService.DeleteStudent(Id);
         }
     }
 }

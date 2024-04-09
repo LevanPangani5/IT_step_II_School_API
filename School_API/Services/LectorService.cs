@@ -6,7 +6,7 @@ using School_API.Data.Model.DTO;
 
 namespace School_API.Services
 {
-    public class LectorService
+    public class LectorService: ILectorService
     {
         private readonly ApplicationDbContext _db;
         private readonly IMapper _mapper;
