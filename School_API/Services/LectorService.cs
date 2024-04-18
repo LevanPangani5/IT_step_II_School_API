@@ -8,10 +8,10 @@ namespace School_API.Services
 {
     public class LectorService: ILectorService
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IApplicationDbContext _db;
         private readonly IMapper _mapper;
 
-        public LectorService(ApplicationDbContext db, IMapper mapper)
+        public LectorService(IApplicationDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
@@ -50,7 +50,7 @@ namespace School_API.Services
 
             try
             {
-                await _db.AddAsync(lector);
+                await _db.Lectors.AddAsync(lector);
                 await _db.SaveChangesAsync();
                 return true;
             }
