@@ -20,28 +20,31 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
  */
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddControllers();
+
 var containerBuilder = new ContainerBuilder();
-
-containerBuilder.RegisterType<LectorService>().As<ILectorService>().InstancePerLifetimeScope();
-containerBuilder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>().InstancePerLifetimeScope();
-
-containerBuilder.RegisterAssemblyTypes(typeof(Program).Assembly)
-    .Where(t => t.Name.EndsWith("Profile"))
-    .As<Profile>();
-
-
-containerBuilder.Register(c =>
-{
-    var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-    optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    return optionsBuilder.Options;
-}).As<DbContextOptions<ApplicationDbContext>>().InstancePerLifetimeScope();
-
+containerBuilder.RegisterModule(new DependencyModule());
 containerBuilder.Populate(builder.Services);
-
 var container = containerBuilder.Build();
 
+// Create the AutofacServiceProvider and configure it with ASP.NET Core.
 var serviceProvider = new AutofacServiceProvider(container);
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+/*var containerBuilder = new ContainerBuilder();
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(builder =>
+    {
+        builder.RegisterModule(new DependencyModule());
+    });*/
 
 
 var app = builder.Build();
