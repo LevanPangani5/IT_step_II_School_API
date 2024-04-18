@@ -15,7 +15,7 @@
 
 # Mono auto generated files
 mono_crash.*
-
+.Scool_API.Tests/
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

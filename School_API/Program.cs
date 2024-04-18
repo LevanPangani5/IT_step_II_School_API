@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 //task1
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-builder.Services.AddScoped<LectorService>();
+services.AddScoped<ILectorService, LectorService>();
+services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

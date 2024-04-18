@@ -10,9 +10,9 @@ namespace School_API.Controllers
     [ApiController]
     public class LectorController : ControllerBase
     {
-        private readonly LectorService _lectorService;
+        private readonly ILectorService _lectorService;
 
-        public LectorController(LectorService lectorService)
+        public LectorController(ILectorService lectorService)
         {
             _lectorService = lectorService;
         }
